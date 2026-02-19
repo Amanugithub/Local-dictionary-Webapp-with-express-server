@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <h1>Look for <span class="brown">words.</span></h1>
+
+    <!-- form component -->
+    <form action="/search" method="post">
+        <input type="search" id="query" name="query" placeholder="Search here..." autofocus autocomplete="off" required>
+        <button class="btn" type="submit">Search</button>
+        <!-- drop down for suggestions -->
+        <ul class="suggestions">
+        </ul>
+        
+
+    </form>
+
+
+    <!-- display component -->
+    <section class="display">
+   <% if (locals.word && !locals.error) { %>
+
+        <% if (word) {%>
+            <h2 id="head-word"><%= word %></h2>
+        <% } %>
+        <div class="container">
+        <% for (let i = 0; i < meanings.length; i++) { %>
+            <div class="card">
+                <% if (meanings[i].def) { %>
+                    <p class="meaning"><span class="number"><%= i + 1%>.(<% if(meanings[i].speech_part) {%> <span class="speech-part"><%=meanings[i].speech_part %></span> ) <% } %></span><%= meanings[i].def %></p>
+                <% } %>
+                <% if (meanings[i].example) {%>
+                    <p class="example"> <span class="brown">ex : </span> <%= meanings[i].example %></p>
+                <% } %>
+                <% if(meanings[i].synonyms) {%>
+                    <img class="similar" src="./img/similar.png" alt="synonym">
+                    <% meanings[i].synonyms.forEach(synonym => { %>
+                        <a href="#" class="synonym-link" data-word="<%= synonym %>"> <%= synonym %> .</a> 
+                   <% }); %>
+                <% } %>
+                <br>
+            </div>
+        <% } %>
+        </div>
+    <% } else if (locals.error) { %>
+        <p>word not found.</p>
+    <% } %>
+     </section>
+ 
+<script >
+    const suggestionContainer = document.querySelector(".suggestions");
+    const submit = document.querySelector(".btn");
+
+    document.getElementById("query").addEventListener ("input",async(e)=>{
+        console.log(e.target.value);
+        suggestionContainer.innerHTML = ""; // Clear previous suggestions
+        //send the input to the backend to find matching words
+        const response = await fetch("/word",{
+            method:"POST",
+            headers: {"Content-Type":'application/json'},
+            body:JSON.stringify({query: e.target.value})
+        })
+        const suggestions =await response.json();
+
+        suggestions.forEach(suggestion => {
+            const li = document.createElement('li');
+            li.textContent = suggestion;
+            li.onclick = ()=>{
+                query.value = suggestion;
+                submit.click();
+                }
+            suggestionContainer.append(li);
+        });
+
+    })
+
+    document.addEventListener("DOMContentLoaded",()=>{
+        const synonymLinks = document.querySelectorAll(".synonym-link");
+        const form = document.querySelector("form");
+        const input = document.getElementById("query");
+
+        synonymLinks.forEach(link =>{
+            link.addEventListener("click",(e)=>{
+                e.preventDefault();
+                input.value = link.dataset.word;
+                form.submit();
+            })
+        })
+    })
+
+</script>
+</body>
+
+</html>

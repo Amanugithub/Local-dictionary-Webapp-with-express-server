@@ -1,0 +1,135 @@
+@font-face {
+    font-family: classy-vogue;
+    src: url(./fonts/Classyvogueregular.ttf);
+}
+@font-face {
+    font-family: opensans;
+    src: url(./fonts/OpenSans-VariableFont_wdth\,wght.ttf);
+}
+
+:root {
+    --bg-primary: #fff8ef;
+    --card: #f4efe1;
+    --text-primary: #2b2b2e;
+    --text-secondary: #BC6C25;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: opensans;
+    font-size: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+h1 {
+    font-family: classy-vogue;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.brown {
+    color: var(--text-secondary);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px; /* limit form width */
+    margin-bottom: 30px;
+}
+
+input[type="search"] {
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    border: none;
+    border-radius: 40px;
+    background-color: var(--card);
+    padding: 0 20px;
+    font-size: 16px;
+}
+
+input[type="search"]:hover {
+    border: none;
+}
+
+.btn {
+    border-radius: 50px;
+    width: 100px;
+    height: 50px;
+    border: none;
+    background-color: var(--text-secondary);
+    color: var(--bg-primary);
+    cursor: pointer;
+}
+
+.display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 700px;
+}
+
+.card {
+    background-color: var(--card);
+    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+#head-word {
+    font-family: classy-vogue;
+    font-weight: 100;
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.example {
+    font-style: italic;
+}
+
+.similar {
+    width: 1em;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.suggestions {
+    list-style: none;
+    padding: 10px;
+    margin-top: 5px;
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--card);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.suggestions li:hover {
+    background-color: var(--text-secondary);
+    color: var(--bg-primary);
+}
+
+.synonym-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    margin-right: 5px;
+}
